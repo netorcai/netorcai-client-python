@@ -3,6 +3,8 @@
 import socket
 import struct
 
+from message import *
+
 def recvall(sock, size, flags=0):
     data = sock.recv(size, flags)
     assert len(data) == size
@@ -70,3 +72,59 @@ class Client:
             "game_state": game_state,
             "winner_player_id": winner_player_id
         })
+
+    def read_login_ack(self):
+        msg = self.recv_json()
+        if msg["message_type"] == "LOGIN_ACK":
+            return LoginAckMessage()
+        elif msg["message_type"] == "KICK":
+            raise Exception("Kicked from netorai. Reason: {}".format(msg["kick_reason"]))
+        else:
+            raise Exception("Unexpected type message received: {}".format(msg["message_type"]))
+
+    def read_game_starts(self):
+        msg = self.recv_json()
+        if msg["message_type"] == "GAME_STARTS":
+            return GameStartsMessage(msg)
+        elif msg["message_type"] == "KICK":
+            raise Exception("Kicked from netorai. Reason: {}".format(msg["kick_reason"]))
+        else:
+            raise Exception("Unexpected type message received: {}".format(msg["message_type"]))
+
+    def read_turn(self):
+        msg = self.recv_json()
+        if msg["message_type"] == "TURN":
+            return TurnMessage(msg)
+        elif msg["message_type"] == "KICK":
+            raise Exception("Kicked from netorai. Reason: {}".format(msg["kick_reason"]))
+        elif msg["message_type"] == "GAME_ENDS":
+            raise Exception("Game over!")
+        else:
+            raise Exception("Unexpected type message received: {}".format(msg["message_type"]))
+
+    def read_game_ends(self):
+        msg = self.recv_json()
+        if msg["message_type"] == "GAME_ENDS":
+            return GameEndsMessage(msg)
+        elif msg["message_type"] == "KICK":
+            raise Exception("Kicked from netorai. Reason: {}".format(msg["kick_reason"]))
+        else:
+            raise Exception("Unexpected type message received: {}".format(msg["message_type"]))
+
+    def read_do_init(self):
+        msg = self.recv_json()
+        if msg["message_type"] == "DO_INIT":
+            return DoInitMessage(msg)
+        elif msg["message_type"] == "KICK":
+            raise Exception("Kicked from netorai. Reason: {}".format(msg["kick_reason"]))
+        else:
+            raise Exception("Unexpected type message received: {}".format(msg["message_type"]))
+
+    def read_do_turn(self):
+        msg = self.recv_json()
+        if msg["message_type"] == "DO_TURN":
+            return DoTurnMessage(msg)
+        elif msg["message_type"] == "KICK":
+            raise Exception("Kicked from netorai. Reason: {}".format(msg["kick_reason"]))
+        else:
+            raise Exception("Unexpected type message received: {}".format(msg["message_type"]))
