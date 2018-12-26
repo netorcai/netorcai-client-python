@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
-
 import json
 
 class PlayerInfo:
     def __init__(self, o):
-        d = json.loads(o)
-        self.playerID = o["player_id"]
+        self.player_id = o["player_id"]
         self.nickname = o["nickname"]
-        self.remoteAddress = o["remote_address"]
-        self.isConnected = o["is_connected"]
+        self.remote_address = o["remote_address"]
+        self.is_connected = o["is_connected"]
 
-def parsePlayersInfo(a):
+def parse_players_info(a):
     l = list()
     for element in a:
         l.append(PlayerInfo(element))
@@ -18,11 +16,11 @@ def parsePlayersInfo(a):
 
 class PlayerActions:
     def __init__(self, o):
-        self.playerID = o["player_id"]
-        self.turnNumber = o["turn_number"]
+        self.player_id = o["player_id"]
+        self.turn_number = o["turn_number"]
         self.actions = o["actions"]
 
-def parsePlayersActions(a):
+def parse_players_actions(a):
     l = list()
     for element in a:
         l.append(PlayerActions(element))
@@ -34,30 +32,30 @@ class LoginAckMessage:
 
 class GameStartsMessage:
     def __init__(self, o):
-        self.playerID = o["player_id"]
-        self.nbPlayers = o["nb_players"]
-        self.nbTurnsMax = o["nb_turns_max"]
-        self.msBeforeFirstTurn = o["milliseconds_before_first_turn"]
-        self.msBetweenTurns = o["milliseconds_between_turns"]
-        self.playersInfo = parsePlayersInfo(o["players_info"])
-        self.initialGameState = o["initial_game_state"]
+        self.player_id = o["player_id"]
+        self.nb_players = o["nb_players"]
+        self.nb_turns_max = o["nb_turns_max"]
+        self.ms_before_first_turn = o["milliseconds_before_first_turn"]
+        self.ms_between_turns = o["milliseconds_between_turns"]
+        self.players_info = parse_players_info(o["players_info"])
+        self.initial_game_state = o["initial_game_state"]
 
 class GameEndsMessage:
     def __init__(self, o):
-        self.winnerPlayerID = o["winner_player_id"]
-        self.gameState = o["game_state"]
+        self.winner_player_id = o["winner_player_id"]
+        self.game_state = o["game_state"]
 
 class TurnMessage:
     def __init__(self, o):
-        self.turnNumber = o["turn_number"]
-        self.playersInfo = parsePlayersInfo(o["players_info"])
-        self.gameState = o["game_state"]
+        self.turn_number = o["turn_number"]
+        self.players_info = parse_players_info(o["players_info"])
+        self.game_state = o["game_state"]
 
 class DoInitMessage:
     def __init__(self, o):
-        self.nbPlayers = o["nb_players"]
-        self.nbTurnsMax = o["nb_turns_max"]
+        self.nb_players = o["nb_players"]
+        self.nb_turns_max = o["nb_turns_max"]
 
 class DoTurnMessage:
     def __init__(self, o):
-        self.playerActions = parsePlayersActions(o["player_actions"])
+        self.player_actions = parse_players_actions(o["player_actions"])
