@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import json
 from netorcai.message import *
 
 def test_player_info():

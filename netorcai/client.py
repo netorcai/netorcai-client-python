@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-
+import json
 import socket
 import struct
 
-from netorcai.message import *
+import netorcai.message
 
 def recvall(sock, size, flags=0):
     data = sock.recv(size, flags)
@@ -18,13 +18,13 @@ class Client:
         self.close()
 
     def connect(self, hostname="localhost", port=4242):
-        self.socket.connect((hostname,port))
+        self.socket.connect((hostname, port))
 
     def close(self):
         self.socket.close()
 
-    def send_string(self, s):
-        send_buffer = (s + "\n").encode('utf-8')
+    def send_string(self, string):
+        send_buffer = (string + "\n").encode('utf-8')
 
         # Send string size, as a little-endian uint16
         binary_size = struct.pack("<H", len(send_buffer))
@@ -42,12 +42,12 @@ class Client:
         content_size = struct.unpack('<H', raw_bytes)[0]
 
         # Read string content
-        s = recvall(self.socket, content_size)
-        return s.decode('utf-8')
+        string = recvall(self.socket, content_size)
+        return string.decode('utf-8')
 
     def recv_json(self):
-        s = self.recv_string()
-        return json.loads(s)
+        string = self.recv_string()
+        return json.loads(string)
 
     def send_login(self, nickname, role):
         self.send_json({
@@ -79,7 +79,7 @@ class Client:
     def read_login_ack(self):
         msg = self.recv_json()
         if msg["message_type"] == "LOGIN_ACK":
-            return LoginAckMessage()
+            return netorcai.message.LoginAckMessage()
         elif msg["message_type"] == "KICK":
             raise RuntimeError("Kicked from netorcai. Reason: {}".format(msg["kick_reason"]))
         else:
@@ -88,7 +88,7 @@ class Client:
     def read_game_starts(self):
         msg = self.recv_json()
         if msg["message_type"] == "GAME_STARTS":
-            return GameStartsMessage(msg)
+            return netorcai.message.GameStartsMessage(msg)
         elif msg["message_type"] == "KICK":
             raise RuntimeError("Kicked from netorcai. Reason: {}".format(msg["kick_reason"]))
         else:
@@ -97,7 +97,7 @@ class Client:
     def read_turn(self):
         msg = self.recv_json()
         if msg["message_type"] == "TURN":
-            return TurnMessage(msg)
+            return netorcai.message.TurnMessage(msg)
         elif msg["message_type"] == "KICK":
             raise RuntimeError("Kicked from netorcai. Reason: {}".format(msg["kick_reason"]))
         elif msg["message_type"] == "GAME_ENDS":
@@ -108,7 +108,7 @@ class Client:
     def read_game_ends(self):
         msg = self.recv_json()
         if msg["message_type"] == "GAME_ENDS":
-            return GameEndsMessage(msg)
+            return netorcai.message.GameEndsMessage(msg)
         elif msg["message_type"] == "KICK":
             raise RuntimeError("Kicked from netorcai. Reason: {}".format(msg["kick_reason"]))
         else:
@@ -117,7 +117,7 @@ class Client:
     def read_do_init(self):
         msg = self.recv_json()
         if msg["message_type"] == "DO_INIT":
-            return DoInitMessage(msg)
+            return netorcai.message.DoInitMessage(msg)
         elif msg["message_type"] == "KICK":
             raise RuntimeError("Kicked from netorcai. Reason: {}".format(msg["kick_reason"]))
         else:
@@ -126,7 +126,7 @@ class Client:
     def read_do_turn(self):
         msg = self.recv_json()
         if msg["message_type"] == "DO_TURN":
-            return DoTurnMessage(msg)
+            return netorcai.message.DoTurnMessage(msg)
         elif msg["message_type"] == "KICK":
             raise RuntimeError("Kicked from netorcai. Reason: {}".format(msg["kick_reason"]))
         else:

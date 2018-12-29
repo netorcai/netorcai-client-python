@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-import json
-
 class PlayerInfo:
     def __init__(self, o):
         self.player_id = o["player_id"]
@@ -8,11 +6,11 @@ class PlayerInfo:
         self.remote_address = o["remote_address"]
         self.is_connected = o["is_connected"]
 
-def parse_players_info(a):
-    l = list()
-    for element in a:
-        l.append(PlayerInfo(element))
-    return l
+def parse_players_info(array):
+    players_infos = list()
+    for element in array:
+        players_infos.append(PlayerInfo(element))
+    return players_infos
 
 class PlayerActions:
     def __init__(self, o):
@@ -20,11 +18,11 @@ class PlayerActions:
         self.turn_number = o["turn_number"]
         self.actions = o["actions"]
 
-def parse_players_actions(a):
-    l = list()
-    for element in a:
-        l.append(PlayerActions(element))
-    return l
+def parse_players_actions(array):
+    players_actions = list()
+    for element in array:
+        players_actions.append(PlayerActions(element))
+    return players_actions
 
 class LoginAckMessage:
     def __init__(self):
