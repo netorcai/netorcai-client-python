@@ -2,16 +2,22 @@ language: python
 python:
   - 3.6
 
+addons:
+  apt:
+    packages:
+    - golang-go
+
 before_script:
-  - pip install pytest-cov codecov
-  # Install go.
-  - apt-get install golang-go
-  # Install netorcai.
+  # Test dependencies
+  - pip install pytest-cov
   - go get github.com/netorcai/netorcai/cmd/netorcai
   - netorcai --version
+  # CI dependencies
+  - pip install codecov
 
 script:
   # Run tests
   - python -m pytest --cov=netorcai tests/
+
   # Submit coverage results to codecov.io
   - codecov
