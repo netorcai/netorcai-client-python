@@ -5,14 +5,8 @@ python:
 before_script:
   - pip install pytest-cov codecov
   # Install go.
-  - wget https://dl.google.com/go/go1.11.4.linux-amd64.tar.gz
-  - tar -xf go1.11.4.linux-amd64.tar.gz
-  - mv go ~/goroot
-  - export GOROOT=~/goroot
-  - export GOPATH=~/go
-  - export PATH="${PATH}:${GOROOT}/bin:${GOPATH}/bin"
+  - apt-get install golang-go
   # Install netorcai.
-  - go get github.com/netorcai/netorcai
   - go get github.com/netorcai/netorcai/cmd/netorcai
   - netorcai --version
 
