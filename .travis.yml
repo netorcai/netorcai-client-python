@@ -12,6 +12,7 @@ before_script:
   - export GOPATH=~/go
   - export PATH="${PATH}:${GOROOT}/bin:${GOPATH}/bin"
   # Install netorcai.
+  - go get github.com/netorcai/netorcai
   - go get github.com/netorcai/netorcai/cmd/netorcai
   - netorcai --version
 
