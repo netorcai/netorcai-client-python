@@ -3,7 +3,7 @@
 import socket
 import struct
 
-from message import *
+from netorcai.message import *
 
 def recvall(sock, size, flags=0):
     data = sock.recv(size, flags)
@@ -13,6 +13,9 @@ def recvall(sock, size, flags=0):
 class Client:
     def __init__(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    def __del__(self):
+        self.close()
 
     def connect(self, hostname="localhost", port=4242):
         self.socket.connect((hostname,port))

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from message import *
+from netorcai.message import *
 
 def test_player_info():
     s = '''{
