@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Main module of the netorcai library."""
 import json
 import socket
 import struct
@@ -6,11 +7,20 @@ import struct
 import netorcai.message
 
 def recvall(sock, size, flags=0):
+    '''Receive exactly the requested size on a socket.'''
     data = sock.recv(size, flags)
     assert len(data) == size
     return data
 
 class Client:
+    """A netorcai Client.
+
+    Handles client-side communications of the netorcai metaprotocol.
+    Most of the time, only the following methods should be called:
+    - connect() and close(), to connect to or disconnect from netorcai
+    - send_<MESSAGE_TYPE>, to send a message to netorcai
+    - recv_<MESSAGE_TYPE>, to blockingly receive a message from netorcai
+    """
     def __init__(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 

@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+"""Parsing module of the netorcai client library."""
+
 class PlayerInfo:
     def __init__(self, o):
         self.player_id = o["player_id"]
