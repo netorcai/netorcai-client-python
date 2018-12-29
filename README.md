@@ -19,6 +19,10 @@ git clone https://github.com/netorcai/netorcai-client-python.git
 pip install ./netorcai-client-python
 ```
 
+Usage
+-----
+Feel free to look at [hello world examples](./examples) to build your own clients.
+
 Running tests
 -------------
 
