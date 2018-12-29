@@ -8,9 +8,9 @@ before_script:
   - wget https://dl.google.com/go/go1.11.4.linux-amd64.tar.gz
   - tar -xf go1.11.4.linux-amd64.tar.gz
   - mv go ~/
-  - export GOROOT=~/go
+  - export GOROOT=~/goroot
   - export GOPATH=~/go
-  - export PATH="${PATH}:${GOROOT}/bin"
+  - export PATH="${PATH}:${GOROOT}/bin:${GOPATH}/bin"
   # Install netorcai.
   - go get github.com/netorcai/netorcai/cmd/netorcai
   - netorcai --version
