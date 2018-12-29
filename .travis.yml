@@ -6,4 +6,4 @@ before_script:
   - pip install pytest-cov
 
 script:
-  - pytest --cov=netorcai tests/
+  - python -m pytest --cov=netorcai tests/
