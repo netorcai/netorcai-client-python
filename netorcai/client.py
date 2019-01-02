@@ -8,8 +8,12 @@ import netorcai.message
 
 def recvall(sock, size, flags=0):
     '''Receive exactly the requested size on a socket.'''
-    data = sock.recv(size, flags)
-    assert len(data) == size
+    data = b''
+    while len(data) < size:
+        packet = sock.recv(size - len(data), flags)
+        if not packet:
+            raise RuntimeError("Could not read on socket. Connection closed by remote?")
+        data += packet
     return data
 
 class Client:
