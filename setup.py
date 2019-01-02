@@ -2,7 +2,7 @@
 from setuptools import setup
 
 setup(name='netorcai',
-      version='1.0.0',
+      version='1.0.1',
       description='Python version of the netorcai client library',
       author='Millian Poquet',
       author_email='millian.poquet@gmail.com',
