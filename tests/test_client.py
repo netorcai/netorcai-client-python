@@ -168,3 +168,16 @@ def test_unexpected_message_but_not_kick():
     assert 'Game over!' in str(err)
 
     n.terminate()
+
+def test_socket_error():
+    for i in range(10):
+        n = launch_netorcai_wait_listening(1, 0)
+
+        player = Client()
+        player.connect()
+        player.send_login("p0", "player")
+
+        n.kill()
+
+        with pytest.raises(Exception) as err:
+            player.read_login_ack()
