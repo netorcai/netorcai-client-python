@@ -27,6 +27,7 @@ class Client:
     """
     def __init__(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.setsockopt(socket.SOL_TCP, socket.TCP_NODELAY, 1)
 
     def __del__(self):
         self.close()

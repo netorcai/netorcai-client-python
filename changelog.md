@@ -9,10 +9,11 @@ Its public API includes:
 
 [//]: =========================================================================
 ## [Unreleased]
+### Fixed
+- `TCP_NODELAY` was not set, which caused a very high latency (x200 locally).
 
 [//]: =========================================================================
 ## [1.0.1] - 2019-01-02
-
 ### Fixed
 - Multi-part TCP messages were not read/sent correctly.
   These operations should now be more robust.
