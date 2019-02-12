@@ -57,6 +57,7 @@ def test_game_starts():
         }
       ],
       "nb_players": 4,
+      "nb_special_players": 0,
       "nb_turns_max": 100,
       "milliseconds_before_first_turn": 1000,
       "milliseconds_between_turns": 1000,
@@ -71,6 +72,7 @@ def test_game_starts():
     assert m.players_info[0].remote_address == "127.0.0.1:59840"
     assert m.players_info[0].is_connected == True
     assert m.nb_players == 4
+    assert m.nb_special_players == 0
     assert m.nb_turns_max == 100
     assert m.ms_before_first_turn == 1000
     assert m.ms_between_turns == 1000
@@ -115,11 +117,13 @@ def test_do_init():
     s = '''{
       "message_type": "DO_INIT",
       "nb_players": 4,
+      "nb_special_players": 0,
       "nb_turns_max": 100
     }'''
 
     m = DoInitMessage(json.loads(s))
     assert m.nb_players == 4
+    assert m.nb_special_players == 0
     assert m.nb_turns_max == 100
 
 def test_player_actions():

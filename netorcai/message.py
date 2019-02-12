@@ -34,6 +34,7 @@ class GameStartsMessage:
     def __init__(self, o):
         self.player_id = o["player_id"]
         self.nb_players = o["nb_players"]
+        self.nb_special_players = o["nb_special_players"]
         self.nb_turns_max = o["nb_turns_max"]
         self.ms_before_first_turn = o["milliseconds_before_first_turn"]
         self.ms_between_turns = o["milliseconds_between_turns"]
@@ -54,6 +55,7 @@ class TurnMessage:
 class DoInitMessage:
     def __init__(self, o):
         self.nb_players = o["nb_players"]
+        self.nb_special_players = o["nb_special_players"]
         self.nb_turns_max = o["nb_turns_max"]
 
 class DoTurnMessage:
