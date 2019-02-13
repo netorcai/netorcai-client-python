@@ -43,7 +43,7 @@ class Client:
         send_buffer = (string + "\n").encode('utf-8')
 
         # Send string size, as a little-endian uint16
-        binary_size = struct.pack("<H", len(send_buffer))
+        binary_size = struct.pack("<I", len(send_buffer))
         self.socket.sendall(binary_size)
 
         # Send string content
@@ -54,8 +54,8 @@ class Client:
 
     def recv_string(self):
         # Read string size, as a little-endian uint16
-        raw_bytes = recvall(self.socket, 2)
-        content_size = struct.unpack('<H', raw_bytes)[0]
+        raw_bytes = recvall(self.socket, 4)
+        content_size = struct.unpack('<I', raw_bytes)[0]
 
         # Read string content
         string = recvall(self.socket, content_size)
