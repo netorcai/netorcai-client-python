@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Parsing module of the netorcai client library."""
+from netorcai.version import metaprotocol_version
 
 class PlayerInfo:
     def __init__(self, o):
@@ -27,8 +28,11 @@ def parse_players_actions(array):
     return players_actions
 
 class LoginAckMessage:
-    def __init__(self):
-        pass
+    def __init__(self, o):
+        self.metaprotocol_version = o["metaprotocol_version"]
+        if self.metaprotocol_version != metaprotocol_version():
+            print("Warning: netorcai uses version '{}' while netorcai-client-python uses '{}'".format(
+                self.metaprotocol_version, metaprotocol_version()))
 
 class GameStartsMessage:
     def __init__(self, o):

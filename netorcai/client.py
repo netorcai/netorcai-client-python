@@ -5,6 +5,7 @@ import socket
 import struct
 
 import netorcai.message
+from netorcai.version import metaprotocol_version
 
 def recvall(sock, size, flags=0):
     '''Receive exactly the requested size on a socket.'''
@@ -68,7 +69,8 @@ class Client:
         self.send_json({
             "message_type": "LOGIN",
             "nickname": nickname,
-            "role": role
+            "role": role,
+            "metaprotocol_version": metaprotocol_version()
         })
 
     def send_turn_ack(self, turn_number, actions):
@@ -94,7 +96,7 @@ class Client:
     def read_login_ack(self):
         msg = self.recv_json()
         if msg["message_type"] == "LOGIN_ACK":
-            return netorcai.message.LoginAckMessage()
+            return netorcai.message.LoginAckMessage(msg)
         elif msg["message_type"] == "KICK":
             raise RuntimeError("Kicked from netorcai. Reason: {}".format(msg["kick_reason"]))
         else:

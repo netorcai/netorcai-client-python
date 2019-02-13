@@ -4,6 +4,7 @@ import subprocess
 import shlex
 from netorcai.client import *
 from netorcai.message import *
+import netorcai.version
 
 def launch_netorcai_wait_listening(nb_players, nb_visus):
     cmd = 'netorcai --simple-prompt --autostart --delay-first-turn=50 --delay-turns=50 --nb-turns-max=2 --nb-players-max={} --nb-visus-max={}'.format(nb_players, nb_visus)
@@ -181,3 +182,15 @@ def test_socket_error():
 
         with pytest.raises(Exception) as err:
             player.read_login_ack()
+
+def test_non_critical_metaprotocol_version_mismatch():
+    n = launch_netorcai_wait_listening(10, 20)
+
+    netorcai.version.minor += 1
+
+    c = get_logged_player()
+    c.read_login_ack()
+
+    netorcai.version.minor -= 1
+
+    n.terminate()
