@@ -2,6 +2,7 @@
 import pytest
 import subprocess
 import shlex
+import time
 from netorcai.client import *
 from netorcai.message import *
 import netorcai.version
@@ -116,6 +117,7 @@ def test_unexpected_message_but_not_kick():
         c.read_turn()
     assert error_msg in str(err)
     c.close()
+    time.sleep(0.6)
 
     with pytest.raises(RuntimeError) as err:
         c = get_logged_player()
@@ -128,12 +130,14 @@ def test_unexpected_message_but_not_kick():
         c.read_do_init()
     assert error_msg in str(err)
     c.close()
+    time.sleep(0.6)
 
     with pytest.raises(RuntimeError) as err:
         c = get_logged_player()
         c.read_do_turn()
     assert error_msg in str(err)
     c.close()
+    time.sleep(0.6)
 
     # Start a game
     player1 = get_logged_player()
