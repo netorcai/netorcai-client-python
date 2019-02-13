@@ -102,33 +102,37 @@ def get_logged_player():
 
 def test_unexpected_message_but_not_kick():
     n = launch_netorcai_wait_listening(2, 0)
-    kick_reason = 'Unexpected message type received: LOGIN_ACK'
+    error_msg = 'Unexpected message type received: LOGIN_ACK'
 
     # LOGIN_ACK instead of something else
     with pytest.raises(RuntimeError) as err:
         c = get_logged_player()
         c.read_game_starts()
-    assert kick_reason in str(err)
+    assert error_msg in str(err)
+    c.close()
 
     with pytest.raises(RuntimeError) as err:
         c = get_logged_player()
         c.read_turn()
-    assert kick_reason in str(err)
+    assert error_msg in str(err)
+    c.close()
 
     with pytest.raises(RuntimeError) as err:
         c = get_logged_player()
         c.read_game_ends()
-    assert kick_reason in str(err)
+    assert error_msg in str(err)
+    c.close()
 
     with pytest.raises(RuntimeError) as err:
         c = get_logged_player()
         c.read_do_init()
-    assert kick_reason in str(err)
+    assert error_msg in str(err)
+    c.close()
 
     with pytest.raises(RuntimeError) as err:
         c = get_logged_player()
         c.read_do_turn()
-    assert kick_reason in str(err)
+    assert error_msg in str(err)
     c.close()
 
     # Start a game
