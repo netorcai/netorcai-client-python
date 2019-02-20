@@ -21,4 +21,4 @@ build_script:
   - "%PYTHON%/Scripts/pip.exe install ."
 
 test_script:
-  - "%PYTHON%/python.exe -m pytest ./tests"
+  - "%PYTHON%/python.exe -m pytest ./tests/test_message.py"
