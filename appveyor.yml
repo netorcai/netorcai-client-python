@@ -1,0 +1,24 @@
+environment:
+  matrix:
+    - PYTHON: "C:\\Python37"
+      PYTHON_VERSION: "3.7.2"
+      PYTHON_ARCH: "32"
+      GOPATH: c:\gopath
+
+stack: go 1.11
+
+init:
+  - "echo %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%"
+  - "go version"
+  - set PATH=%PATH%;c:\gopath\bin
+
+install:
+  - "%PYTHON%/Scripts/pip.exe install pytest"
+  - go get github.com/netorcai/netorcai/cmd/netorcai
+  - netorcai --help
+
+build_script:
+  - "%PYTHON%/Scripts/pip.exe install ."
+
+test_script:
+  - "%PYTHON%/python.exe -m pytest ./tests"
