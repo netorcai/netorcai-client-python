@@ -1,4 +1,5 @@
 [![Build Status](https://img.shields.io/travis/netorcai/netorcai-client-python/master.svg?maxAge=600)](https://travis-ci.org/netorcai/netorcai-client-python)
+[![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/netorcai/netorcai-client-python?svg=true)](https://ci.appveyor.com/project/mpoquet/netorcai-client-python)
 [![Coverage Status](https://img.shields.io/codecov/c/github/netorcai/netorcai-client-python/master.svg?maxAge=600)](https://codecov.io/github/netorcai/netorcai-client-python)
 
 netorcai-client-python
