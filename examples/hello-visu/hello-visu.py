@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-from netorcai.client import *
+from netorcai.agent import *
 import sys
 
 def main():
     try:
-        client = Client()
+        client = Agent()
 
         print("Connecting to netorcai...", end=' ', flush=True)
         client.connect()
@@ -23,6 +23,8 @@ def main():
             print("Waiting for TURN...", end=' ', flush=True)
             turn = client.read_turn()
             print("done")
+
+            print("world state for turn", i, turn.game_state)
 
             actions = []
             print("Sending actions {}...".format(actions), end=' ', flush=True)
