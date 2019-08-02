@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-from netorcai.client import *
+from netorcai.agent import *
 import sys
 
 def main():
     try:
-        client = Client()
+        client = Agent()
 
         print("Connecting to netorcai...", end=' ', flush=True)
         client.connect()

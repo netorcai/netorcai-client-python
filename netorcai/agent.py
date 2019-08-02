@@ -17,27 +17,40 @@ def recvall(sock, size, flags=0):
         data += packet
     return data
 
-class Client:
-    """A netorcai Client.
+class Agent:
+    """A netorcai Agent.
 
-    Handles client-side communications of the netorcai metaprotocol.
-    Most of the time, only the following methods should be called:
-    - connect() and close(), to connect to or disconnect from netorcai
+    An agent is any netorcai program except the gamemaster.
+    Handles agent-side communications of the netorcai metaprotocol.
+
+    Once connected to the gamemaster, only the following methods
+    should be called:
+    - close(), to connect to or disconnect from netorcai
     - send_<MESSAGE_TYPE>, to send a message to netorcai
-    - recv_<MESSAGE_TYPE>, to blockingly receive a message from netorcai
+    - recv_<MESSAGE_TYPE>, to blockingly receive a message from netorcai.
+
+    In order to connect, you can either use:
+    - connect() to connect to a gamemaster running as a server
+    - take_over() to use an existing socket, for instance to talk to a
+    gamemaster connecting to this program as a server.
     """
     def __init__(self):
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.setsockopt(socket.SOL_TCP, socket.TCP_NODELAY, 1)
+        pass
 
     def __del__(self):
         self.close()
 
     def connect(self, hostname="localhost", port=4242):
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.setsockopt(socket.SOL_TCP, socket.TCP_NODELAY, 1)
         self.socket.connect((hostname, port))
 
+    def take_over(self, socket):
+        self.socket = socket
+
     def close(self):
-        self.socket.close()
+        if self.socket:
+            self.socket.close()
 
     def send_string(self, string):
         send_buffer = (string + "\n").encode('utf-8')
