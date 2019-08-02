@@ -24,6 +24,8 @@ def main():
             turn = client.read_turn()
             print("done")
 
+            print("world state for turn", i, turn.game_state)
+
             actions = []
             print("Sending actions {}...".format(actions), end=' ', flush=True)
             client.send_turn_ack(turn.turn_number, actions)
