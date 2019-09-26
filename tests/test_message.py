@@ -16,33 +16,6 @@ def test_player_info():
     assert pinfo.remote_address == "127.0.0.1:59840"
     assert pinfo.is_connected == True
 
-def test_parse_players_info():
-    s = '''[
-      {
-        "player_id": 0,
-        "nickname": "jugador",
-        "remote_address": "127.0.0.1:59840",
-        "is_connected": true
-      },
-      {
-        "player_id": 1,
-        "nickname": "bot",
-        "remote_address": "127.0.0.1:59842",
-        "is_connected": false
-      }
-    ]'''
-
-    pinfos = parse_players_info(json.loads(s))
-    assert len(pinfos) == 2
-    assert pinfos[0].player_id == 0
-    assert pinfos[0].nickname == "jugador"
-    assert pinfos[0].remote_address == "127.0.0.1:59840"
-    assert pinfos[0].is_connected == True
-
-    assert pinfos[1].player_id == 1
-    assert pinfos[1].nickname == "bot"
-    assert pinfos[1].remote_address == "127.0.0.1:59842"
-    assert pinfos[1].is_connected == False
 
 def test_game_starts():
     s = '''{
